@@ -28,6 +28,7 @@ describe('server responses', () => {
     var filename = path.join('.', 'spec', 'water-lg.multipart');
     fs.readFile(filename, (err, fileData) => {
       var file = multipart.getFile(fileData);
+      console.log(fileData);
       expect(file.filename).to.equal('water-lg.jpg');
       done();
     });

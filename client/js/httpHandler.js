@@ -1,27 +1,23 @@
 (function() {
 
   const serverUrl = 'http://127.0.0.1:3000';
-
+  // const bgUrl = 'http://127.0.0.1:3000/background.jpg';
   //
   // TODO: build the swim command fetcher here
   //
-  const ajaxGet = () => {
+  const ajaxGetDir = () => {
     $.ajax({
       type: 'GET',
       url: serverUrl,
-      contentType: 'application/JSON',
       success: (data) => {
         SwimTeam.move(data);
+      },
+      complete: () => {
+        setTimeout(ajaxGetDir, 1000);
       }
     });
   };
-
-  // setInterval(ajaxGet, 1000);
-
-  /////////////////////////////////////////////////////////////////////
-  // The ajax file uplaoder is provided for your convenience!
-  // Note: remember to fix the URL below.
-  /////////////////////////////////////////////////////////////////////
+  setTimeout(ajaxGetDir, 0);
 
   const ajaxFileUplaod = (file) => {
     var formData = new FormData();
@@ -29,11 +25,12 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: serverUrl,
+      url: '/background.jpg',
       cache: false,
       contentType: false,
       processData: false,
       success: () => {
+        console.log('it was added to bgUrl');
         // reload the page
         window.location = window.location.href;
       }
@@ -54,7 +51,6 @@
       console.log('Not a jpg file!');
       return;
     }
-    debugger;
     ajaxFileUplaod(file);
   });
 

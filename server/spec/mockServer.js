@@ -35,6 +35,7 @@ var response = function() {
   this.on = this.once = this.emit = ()=>{};
 
   this.writeHead = (responseCode, headers) => {
+    console.log(headers);
     this._responseCode = responseCode;
     this._headers = headers;
   };
@@ -46,6 +47,7 @@ var response = function() {
   };
 
   this.end = (data) => {
+    console.log(data);
     this._ended = true;
     if (data) {
       this._data = Buffer.concat([this._data, Buffer.from(data)]);
